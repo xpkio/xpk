@@ -1,0 +1,17 @@
+xpk.dev:8080 {
+  bind 0.0.0.0
+  tls off
+  proxy / 0.0.0.0:3100 {
+    transparent
+    websocket
+  }
+}
+
+xpk.dev/api:8080 {
+  bind 0.0.0.0
+  tls off
+  proxy / 0.0.0.0:3110 {
+    transparent
+    websocket
+  }
+}

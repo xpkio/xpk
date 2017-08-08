@@ -1,0 +1,9 @@
+{
+  "apps" : [{
+    "name": "xpk-front",
+    "script": "npm",
+    "args": "start",
+    "exec_interpreter": "none",
+    "cwd": "./front"
+  }]
+}
