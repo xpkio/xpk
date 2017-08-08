@@ -5,5 +5,11 @@
     "args": "start",
     "exec_interpreter": "none",
     "cwd": "./front"
+  },{
+    "name": "xpk-back",
+    "script": "./gradlew",
+    "args": "bootRun",
+    "exec_interpreter": "none",
+    "cwd": "./back"
   }]
 }
