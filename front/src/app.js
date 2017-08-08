@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Home from './screens/home'
 
 export default ()=>(
-  <div>Yippie!</div>
+  <Home/>
 )

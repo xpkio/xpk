@@ -1,10 +1,18 @@
 {
   "apps" : [{
+    "name": "caddy",
+    "script": "caddy",
+    "exec_interpreter": "none",
+  },{
     "name": "xpk-front",
     "script": "npm",
     "args": "start",
     "exec_interpreter": "none",
-    "cwd": "./front"
+    "cwd": "./front",
+    "env": {
+      "PORT": 3000,
+      "XPK_HOST": "http://xpk.dev"
+    }
   },{
     "name": "xpk-back",
     "script": "./gradlew",
