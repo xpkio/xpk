@@ -30,6 +30,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-websocket')
     runtime('org.springframework.boot:spring-boot-devtools')
+    compile("org.springframework.boot:spring-boot-starter-security")
     compile("com.zaxxer:HikariCP:2.5.1")
     compile('org.flywaydb:flyway-core')
     runtime('org.postgresql:postgresql')
