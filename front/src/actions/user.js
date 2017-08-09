@@ -14,3 +14,9 @@ export const login = ({username, password})=>async (dispatch)=>{
 
   dispatch(setUser(res.data))
 }
+
+
+login({
+  username: 'username',
+  password: 'password'
+})(x=>{console.log(x)})
