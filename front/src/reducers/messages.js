@@ -1,11 +1,14 @@
 import * as types from '../types'
 
-const initialState = null
+const initialState = {}
 
 export default function(state=initialState, action){
   const actions = {
-    [types.SET_USER]: ()=>{
-      return action.user
+    [types.SET_MESSAGES]: ()=>{
+      return {
+        ...state,
+        ...action.messages
+      }
     }
   }
 
