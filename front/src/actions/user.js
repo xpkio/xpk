@@ -7,10 +7,12 @@ export const setUser = (user)=>({
 })
 
 export const login = ({username, password}, cb=()=>{})=>async (dispatch)=>{
-  const res = await withServer().post('/api/login', {username, password})
+  const authRes = await withServer().post('/api/login', {username, password})
+  configureToken(authRes.headers.authorization)
 
-  configureToken(res.headers.authorization)
-  dispatch(setUser(res.data))
+  const userRes = await withServer().get('/api/current-user')
+  dispatch(setUser(userRes.data))
+
   cb()
 }
 
