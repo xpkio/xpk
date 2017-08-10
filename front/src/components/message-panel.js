@@ -39,12 +39,12 @@ export default ()=>(
               <div className="tile mb-10" key={index}>
                 <div className="tile-icon">
                   <figure className="avatar">
-                    <img src="https://www.gravatar.com/avatar/302888123d51ff8127794978d8ddb416?d=mm"/>
+                    <img alt="Profile" src="https://www.gravatar.com/avatar/302888123d51ff8127794978d8ddb416?d=mm"/>
                   </figure>
                 </div>
                 <div className="tile-content">
                   <p className="tile-title">
-                    <a href="#">Ryan Allred</a> &bull; 3 minutes ago
+                    <a href="#username">Ryan Allred</a> &bull; 3 minutes ago
                     {' '}
                     <span style={{color: '#d50000'}} className="tooltop tooltip-top" data-tooltip="Tooltip">&bull;</span>
                   </p>

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import {withServer, configureToken} from '../request'
 import * as types from '../types'
 
 export const setUser = (user)=>({
@@ -6,17 +6,16 @@ export const setUser = (user)=>({
   user
 })
 
-export const login = ({username, password})=>async (dispatch)=>{
-  const res = await axios.post('/api/login', {
-    username,
-    password
-  })
+export const login = ({username, password}, cb=()=>{})=>async (dispatch)=>{
+  const res = await withServer().post('/api/login', {username, password})
 
+  configureToken(res.headers.authorization)
   dispatch(setUser(res.data))
+  cb()
 }
 
-
-login({
-  username: 'username',
-  password: 'password'
-})(x=>{console.log(x)})
+export const logout = (cb=()=>{})=>async (dispatch)=>{
+  configureToken(undefined)
+  dispatch(setUser(null))
+  cb()
+}
