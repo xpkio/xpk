@@ -1,14 +1,13 @@
 package io.xpk.security.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.xpk.web.dto.AccountCredentials;
+import io.xpk.web.obj.AccountCredentials;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

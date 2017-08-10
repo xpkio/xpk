@@ -1,9 +1,9 @@
-CREATE TABLE "User"
+CREATE TABLE xpk_user
 (
-  Id               BIGSERIAL PRIMARY KEY,
-  Username         TEXT NOT NULL,
-  FirstName        TEXT,
-  LastName         TEXT,
-  Password         TEXT,
-  Salt             TEXT
-)
+  id BIGSERIAL PRIMARY KEY,
+  username TEXT UNIQUE NOT NULL,
+  first_name TEXT,
+  last_name TEXT,
+  email TEXT,
+  password TEXT
+);
