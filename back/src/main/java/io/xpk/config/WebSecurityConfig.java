@@ -3,6 +3,7 @@ package io.xpk.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.xpk.security.auth.JWTAuthenticationFilter;
 import io.xpk.security.auth.JWTLoginFilter;
+import io.xpk.security.auth.TokenAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,9 +19,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final ObjectMapper objectMapper;
+  private final TokenAuthenticationService tokenAuthenticationService;
 
-  public WebSecurityConfig(ObjectMapper objectMapper) {
+  public WebSecurityConfig(ObjectMapper objectMapper, TokenAuthenticationService tokenAuthenticationService) {
     this.objectMapper = objectMapper;
+    this.tokenAuthenticationService = tokenAuthenticationService;
   }
 
   @Override
@@ -34,10 +37,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest().authenticated()
         .and()
         // We filter the api/login requests
-        .addFilterBefore(new JWTLoginFilter("/login", authenticationManager(), objectMapper),
+        .addFilterBefore(new JWTLoginFilter("/login", authenticationManager(), objectMapper, tokenAuthenticationService),
             UsernamePasswordAuthenticationFilter.class)
         // And filter other requests to check the presence of JWT in header
-        .addFilterBefore(new JWTAuthenticationFilter(),
+        .addFilterBefore(new JWTAuthenticationFilter(tokenAuthenticationService),
             UsernamePasswordAuthenticationFilter.class);
   }
 

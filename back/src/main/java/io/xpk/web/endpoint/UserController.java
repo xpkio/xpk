@@ -2,6 +2,7 @@ package io.xpk.web.endpoint;
 
 import io.xpk.domain.obj.XpkUser;
 import io.xpk.domain.repo.XpkUserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.security.Principal;
 import java.util.Objects;
 
 @RestController
+@Slf4j
 public class UserController {
 
   private final XpkUserRepository xpkUserRepository;
@@ -22,6 +24,7 @@ public class UserController {
   public XpkUser currentUser(Principal principal, HttpServletResponse response) {
     XpkUser user = xpkUserRepository.findByUsername(principal.getName());
     if (user == null) {
+      log.warn("Someone's logged in as " + principal.getName() + " but they don't have a corresponding user in the db!");
       response.setStatus(404);
     }
     return user;
