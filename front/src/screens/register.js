@@ -21,6 +21,7 @@ const Register = ({history, user, isLoading, setLoading})=>{
 
   const submit = (e)=>{
     e.preventDefault()
+    setLoading(true)
     actions.register({
       username: refs.username.value,
       password: refs.password.value,
@@ -30,7 +31,6 @@ const Register = ({history, user, isLoading, setLoading})=>{
     }, ()=>{
       history.push('/')
     })
-    setLoading(true)
   }
 
   return (

@@ -16,6 +16,11 @@ export const login = ({username, password}, cb=()=>{})=>async (dispatch)=>{
   cb()
 }
 
+export const restoreUser = (token)=>async (dispatch)=>{
+  const userRes = await withServer().get('/api/current-user')
+  dispatch(setUser(userRes.data))
+}
+
 export const register = (
   {username, password, firstName, lastName, email},
   cb=()=>{}

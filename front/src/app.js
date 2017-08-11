@@ -1,7 +1,21 @@
 import React from 'react'
+import {compose, lifecycle} from 'recompose'
+import actions from './actions'
 
-export default ({children})=>(
-  <div id="app">
-    {children}
-  </div>
-)
+const App = ({children})=>{
+  return (
+    <div id="app">
+      {children}
+    </div>
+  )
+}
+
+export default compose(
+  lifecycle({
+    componentDidMount: ()=>{
+      if (localStorage.getItem('token')) {
+        actions.restoreUser(localStorage.getItem('token'))
+      }
+    }
+  })
+)(App)

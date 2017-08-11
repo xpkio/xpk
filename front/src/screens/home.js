@@ -11,8 +11,6 @@ const Home = ({history, user})=>{
 
   return (
     <div className="app-panel">
-      <div className="app-panel-header text-center">
-      </div>
       <div className="app-panel-main">
         <nav className="app-panel-nav">
           <div className="panel">
@@ -28,7 +26,7 @@ const Home = ({history, user})=>{
                   </a>
                 </li>
                 <li className="tab-item">
-                  <a href="#app-panels">
+                  <a href="#app-panels" className="badge">
                     You
                   </a>
                 </li>

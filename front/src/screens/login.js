@@ -24,7 +24,6 @@ const Login = ({history, user, isLoading, setLoading})=>{
       password: refs.password.value
     }, ()=>{
       history.push('/')
-      setLoading(true)
     })
   }
 
