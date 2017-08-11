@@ -19,11 +19,12 @@ module.exports = {
     'args': 'bootRun',
     'exec_interpreter': 'none',
     'cwd': './back'
-  }]
+  }],
 
   'deploy': {
     'production': Object.assign(require('./deployment-secrets.json'),{
       'post-deploy': `
+        cd front
         npm install
         npm run build
         pm2 restart xpk
