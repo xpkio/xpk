@@ -24,15 +24,24 @@ module.exports = {
   'deploy': {
     'production': Object.assign(require('./deployment-secrets.json'),{
       'post-deploy': `
+        # React Build
         cd front
         npm install
         npm run build
+        cd ..
+
+        # Gradle build
+        cd back
+        ./gradlew clean
+        cd ..
+
+        # Restart pm2
         pm2 restart xpk
-        git checkout production
-        git rebase master
-        git push origin production
-        git checkout master
-      `.trim().split('\n').map(x=>x.trim()).join(' && ').trim(),
+      ` .trim()
+        .split('\n')
+        .map(x=>x.trim())
+        .filter(x=>x.length && !x.startsWith('#'))
+        .join(' && '),
       'env': {
         'NODE_ENV': 'production'
       }
