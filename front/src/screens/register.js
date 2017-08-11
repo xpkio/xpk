@@ -44,7 +44,7 @@ const Register = ({history, user, isLoading, setLoading})=>{
             width: '50vw',
           }}>
             <div className="modal-header text-center">
-              <div className="modal-title"><img style={{height: '128px'}} src={xpklogo}/></div>
+              <div className="modal-title"><img alt="logo" style={{height: '128px'}} src={xpklogo}/></div>
             </div>
             <div className="modal-body">
               <div className="content">

@@ -14,6 +14,11 @@ import Login from './screens/login'
 import Register from './screens/register'
 import NoMatch from './screens/nomatch'
 
+import {eventSource} from './request'
+const es = eventSource('/api/channel/hello')
+es.onmessage = e=>console.log(e)
+
+
 const routes = [{
   title: 'Home',
   path: '/',

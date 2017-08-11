@@ -16,7 +16,7 @@ const Home = ({history, user})=>{
         <nav className="app-panel-nav">
           <div className="panel">
             <div className="panel-header">
-              <div className="panel-title"><img style={{height: '128px'}} src={xpklogo}/></div>
+              <div className="panel-title"><img alt="logo" style={{height: '128px'}} src={xpklogo}/></div>
             </div>
             <div className="panel-nav">
               <ul className="tab tab-block">
