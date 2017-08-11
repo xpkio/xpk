@@ -8,6 +8,8 @@ const MessagePanel = ({messages})=>{
     input: null
   }
 
+  console.log(messages)
+
   const submit = (e)=>{
     e.preventDefault()
     actions.postMessage({
@@ -56,7 +58,7 @@ const MessagePanel = ({messages})=>{
               display: 'flex',
               flexDirection: 'column-reverse',
             }}>
-              {Object.keys(messages).map(key=>messages[key]).sort((a, b)=>a.time - b.time).map(({body, time}, index)=>(
+              {Object.keys(messages).map(key=>messages[key]).sort((a, b)=>b.time - a.time).map(({body, time}, index)=>(
                 <div className="tile mb-10" key={index}>
                   <div className="tile-icon">
                     <figure className="avatar">

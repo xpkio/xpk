@@ -3,7 +3,7 @@ import {withServer, eventSource} from '../request'
 
 export const addMessage = (...messages)=>({
   type: types.SET_MESSAGES,
-  messages: messages.reduce((obj, message)=>({...obj, [message.time]: obj}), {}) // @TODO use id instead of time
+  messages: messages.reduce((obj, message)=>({...obj, [message.time]: message}), {}) // @TODO use id instead of time
 })
 
 export const postMessage = ({type, typeId, body, time}, cb=()=>{})=>async (dispatch)=>{
