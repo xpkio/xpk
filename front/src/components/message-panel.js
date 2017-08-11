@@ -1,6 +1,6 @@
 import React from 'react'
 
-const posts = [1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+const posts = [1,1,1,1,1,1]
 
 export default ()=>(
   <div className="message-box"style={{

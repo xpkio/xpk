@@ -17,7 +17,7 @@ const Home = ({history, user})=>{
         <nav className="app-panel-nav">
           <div className="panel">
             <div className="panel-header">
-              <button className="btn btn-clear float-right"></button>
+              <button className="btn btn-clear float-right tooltip tooltip-left" data-tooltip="Hide"/>
               <div className="panel-title">Speak</div>
             </div>
             <div className="panel-nav">

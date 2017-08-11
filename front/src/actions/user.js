@@ -16,6 +16,14 @@ export const login = ({username, password}, cb=()=>{})=>async (dispatch)=>{
   cb()
 }
 
+export const register = (
+  {username, password, firstName, lastName, email},
+  cb=()=>{}
+)=>async (dispatch)=>{
+  await withServer().post('/api/user', {username, password, firstName, lastName, email})
+  await login({username, password}, cb)(dispatch)
+}
+
 export const logout = (cb=()=>{})=>async (dispatch)=>{
   configureToken(undefined)
   dispatch(setUser(null))

@@ -5,7 +5,7 @@ import {compose, withState} from 'recompose'
 import classNames from 'classnames'
 import actions from '../actions'
 
-const Login = ({history, user, isLoading, setLoading})=>{
+const Register = ({history, user, isLoading, setLoading})=>{
   if (user) {
     window.setTimeout(()=>history.push('/'), 1)
     return null
@@ -13,19 +13,24 @@ const Login = ({history, user, isLoading, setLoading})=>{
 
   const refs = {
     username: null,
-    password: null
+    password: null,
+    firstName: null,
+    lastName: null,
+    email: null,
   }
 
   const submit = (e)=>{
     e.preventDefault()
-    setLoading(true)
-    actions.login({
+    actions.register({
       username: refs.username.value,
-      password: refs.password.value
+      password: refs.password.value,
+      firstName: refs.firstName.value,
+      lastName: refs.lastName.value,
+      email: refs.email.value
     }, ()=>{
       history.push('/')
-      setLoading(true)
     })
+    setLoading(true)
   }
 
   return (
@@ -58,12 +63,36 @@ const Login = ({history, user, isLoading, setLoading})=>{
                     type="password"
                     placeholder="Password"/>
                 </div>
+                <div className="form-group">
+                  <label className="form-label">First Name</label>
+                  <input
+                    ref={e=>refs.firstName = e}
+                    className="form-input"
+                    type="text"
+                    placeholder="Password"/>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Last Name</label>
+                  <input
+                    ref={e=>refs.lastName = e}
+                    className="form-input"
+                    type="text"
+                    placeholder="Last Name"/>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Email</label>
+                  <input
+                    ref={e=>refs.email = e}
+                    className="form-input"
+                    type="email"
+                    placeholder="Email"/>
+                </div>
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-link" onClick={e=>history.push('/register')}>Register</button>
+              <button type="button" className="btn btn-link" onClick={e=>history.push('/login')}>Login</button>
               {' '}
-              <button className={classNames('btn btn-primary', {loading: isLoading})}>Login</button>
+              <button className={classNames('btn btn-primary', {loading: isLoading})}>Register</button>
             </div>
           </div>
         </div>
@@ -76,4 +105,4 @@ export default compose(
   connect(state=>({user: state.user})),
   withRouter,
   withState('isLoading', 'setLoading', false)
-)(Login)
+)(Register)

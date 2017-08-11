@@ -11,6 +11,7 @@ import './index.css'
 //Routes
 import Home from './screens/home'
 import Login from './screens/login'
+import Register from './screens/register'
 import NoMatch from './screens/nomatch'
 
 const routes = [{
@@ -22,6 +23,11 @@ const routes = [{
   title: 'Login',
   path: '/login',
   component: Login,
+  exact: true
+},{
+  title: 'Register',
+  path: '/register',
+  component: Register,
   exact: true
 }]
 
