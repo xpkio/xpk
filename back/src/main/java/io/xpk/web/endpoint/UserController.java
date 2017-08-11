@@ -4,6 +4,9 @@ import io.xpk.domain.obj.XpkUser;
 import io.xpk.domain.repo.XpkUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.text.RandomStringGenerator;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +18,11 @@ import java.util.Objects;
 public class UserController {
 
   private final XpkUserRepository xpkUserRepository;
+  private final PasswordEncoder passwordEncoder;
 
-  public UserController(XpkUserRepository xpkUserRepository) {
+  public UserController(XpkUserRepository xpkUserRepository, PasswordEncoder passwordEncoder) {
     this.xpkUserRepository = xpkUserRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @RequestMapping("/current-user")
@@ -30,25 +35,28 @@ public class UserController {
     return user;
   }
 
-  @GetMapping("/user/{id}")
-  public XpkUser user(@PathVariable Long id, HttpServletResponse response) {
-    XpkUser user = xpkUserRepository.findOne(id);
+  @PreAuthorize("#principal.getName() == #username")
+  @GetMapping("/user/{username}")
+  public XpkUser user(@PathVariable String username, Principal principal, HttpServletResponse response) {
+    XpkUser user = xpkUserRepository.findByUsername(username);
     if (user == null) {
       response.setStatus(404);
     }
     return user;
   }
 
-  @PutMapping("/user/{id}")
-  public XpkUser putUser(@PathVariable Long id, @RequestBody XpkUser user) {
-    Validate.isTrue(Objects.equals(id, user.getId()));
+  @PreAuthorize("#principal.getName() == #username")
+  @PutMapping("/user/{username}")
+  public XpkUser putUser(@PathVariable String username, Principal principal, @RequestBody XpkUser user) {
+    Validate.isTrue(Objects.equals(username, user.getUsername()));
     return xpkUserRepository.save(user);
   }
 
-  @DeleteMapping("/user/{id}")
-  public void deleteUser(@PathVariable Long id, HttpServletResponse response) {
-    if (xpkUserRepository.exists(id)) {
-      xpkUserRepository.delete(id);
+  @PreAuthorize("#principal.getName() == #username")
+  @DeleteMapping("/user/{username}")
+  public void deleteUser(@PathVariable String username, Principal principal, HttpServletResponse response) {
+    if (xpkUserRepository.existsByUsername(username)) {
+      xpkUserRepository.deleteByUsername(username);
       response.setStatus(204);
     } else {
       response.setStatus(404);
@@ -57,7 +65,10 @@ public class UserController {
 
   @PostMapping("/user")
   public XpkUser newUser(@RequestBody XpkUser user) {
-    Validate.isTrue(user.getId() == null);
+    Validate.isTrue(user.getId() == null, "You can't set the id in a new user request.");
+    String salt = new RandomStringGenerator.Builder().withinRange('0', 'z').build().generate(13);
+    user.setSalt(salt);
+    user.setPassword(passwordEncoder.encode(user.getPassword() + user.getSalt()));
     return xpkUserRepository.save(user);
   }
 }

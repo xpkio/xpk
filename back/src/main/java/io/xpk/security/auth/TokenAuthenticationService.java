@@ -28,7 +28,7 @@ public class TokenAuthenticationService {
     res.addHeader(AUTHORIZATION, BEARER + " " + JWT);
   }
 
-  static Authentication getAuthentication(HttpServletRequest request) {
+  public Authentication getAuthentication(HttpServletRequest request) {
     String token = request.getHeader(AUTHORIZATION);
     if (token != null) {
       // parse the token.
