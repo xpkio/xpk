@@ -14,6 +14,7 @@ import java.security.Principal;
 import java.util.Objects;
 
 @RestController
+@RequestMapping("/user")
 @Slf4j
 public class UserController {
 
@@ -25,7 +26,7 @@ public class UserController {
     this.passwordEncoder = passwordEncoder;
   }
 
-  @RequestMapping("/current-user")
+  @RequestMapping("/self")
   public XpkUser currentUser(Principal principal, HttpServletResponse response) {
     XpkUser user = xpkUserRepository.findByUsername(principal.getName());
     if (user == null) {
@@ -36,7 +37,7 @@ public class UserController {
   }
 
   @PreAuthorize("#principal.getName() == #username")
-  @GetMapping("/user/{username}")
+  @GetMapping("/{username}")
   public XpkUser user(@PathVariable String username, Principal principal, HttpServletResponse response) {
     XpkUser user = xpkUserRepository.findByUsername(username);
     if (user == null) {
@@ -46,14 +47,14 @@ public class UserController {
   }
 
   @PreAuthorize("#principal.getName() == #username")
-  @PutMapping("/user/{username}")
+  @PutMapping("/{username}")
   public XpkUser putUser(@PathVariable String username, Principal principal, @RequestBody XpkUser user) {
     Validate.isTrue(Objects.equals(username, user.getUsername()));
     return xpkUserRepository.save(user);
   }
 
   @PreAuthorize("#principal.getName() == #username")
-  @DeleteMapping("/user/{username}")
+  @DeleteMapping("/{username}")
   public void deleteUser(@PathVariable String username, Principal principal, HttpServletResponse response) {
     if (xpkUserRepository.existsByUsername(username)) {
       xpkUserRepository.deleteByUsername(username);
@@ -63,7 +64,7 @@ public class UserController {
     }
   }
 
-  @PostMapping("/user")
+  @PostMapping
   public XpkUser newUser(@RequestBody XpkUser user) {
     Validate.isTrue(user.getId() == null, "You can't set the id in a new user request.");
     String salt = new RandomStringGenerator.Builder().withinRange('0', 'z').build().generate(13);

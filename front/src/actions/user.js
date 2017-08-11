@@ -10,14 +10,14 @@ export const login = ({username, password}, cb=()=>{})=>async (dispatch)=>{
   const authRes = await withServer().post('/api/login', {username, password})
   configureToken(authRes.headers.authorization)
 
-  const userRes = await withServer().get('/api/current-user')
+  const userRes = await withServer().get('/api/user/self')
   dispatch(setUser(userRes.data))
 
   cb()
 }
 
 export const restoreUser = (token)=>async (dispatch)=>{
-  const userRes = await withServer().get('/api/current-user')
+  const userRes = await withServer().get('/api/user/self')
   dispatch(setUser(userRes.data))
 }
 
