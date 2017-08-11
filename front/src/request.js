@@ -1,10 +1,7 @@
 import axios from 'axios'
 
-let instance = axios.create({
-  headers: {
-    'Authorization': localStorage.getItem('token') || undefined
-  }
-})
+let instance = axios
+
 export const withServer = ()=>instance
 
 export const configureToken = (token)=>{
@@ -15,3 +12,6 @@ export const configureToken = (token)=>{
     }
   })
 }
+
+if (localStorage.getItem('token'))
+  configureToken(localStorage.getItem('token'))
