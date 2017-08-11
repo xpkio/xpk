@@ -2,6 +2,7 @@ import React from 'react'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import MessagePanel from '../components/message-panel'
+import xpklogo from '../assets/xpk.svg'
 
 const Home = ({history, user})=>{
   if (!user) {
@@ -15,8 +16,7 @@ const Home = ({history, user})=>{
         <nav className="app-panel-nav">
           <div className="panel">
             <div className="panel-header">
-              <button className="btn btn-clear float-right tooltip tooltip-left" data-tooltip="Hide"/>
-              <div className="panel-title">Speak</div>
+              <div className="panel-title"><img style={{height: '128px'}} src={xpklogo}/></div>
             </div>
             <div className="panel-nav">
               <ul className="tab tab-block">

@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {compose, withState} from 'recompose'
 import classNames from 'classnames'
 import actions from '../actions'
+import xpklogo from '../assets/xpk.svg'
 
 const Login = ({history, user, isLoading, setLoading})=>{
   if (user) {
@@ -36,8 +37,8 @@ const Login = ({history, user, isLoading, setLoading})=>{
             maxWidth: '400px',
             width: '50vw',
           }}>
-            <div className="modal-header">
-              <div className="modal-title">xpk.io</div>
+            <div className="modal-header text-center">
+              <div className="modal-title"><img style={{height: '128px'}} src={xpklogo}/></div>
             </div>
             <div className="modal-body">
               <div className="content">
