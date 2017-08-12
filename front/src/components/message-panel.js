@@ -82,7 +82,7 @@ const MessagePanel = ({messages})=>{
 
 export default compose(
   lifecycle({
-    componentDidMount: ()=>actions.listenTo({item: 'channel', itemId: 'hello'})
+    componentDidMount: ()=>actions.listenTo({type: 'channel', typeId: 'hello'})
   }),
   connect(state=>({messages: state.messages}))
 )(MessagePanel)

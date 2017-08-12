@@ -13,8 +13,10 @@ export const postMessage = ({type, typeId, body, time}, cb=()=>{})=>async (dispa
   cb()
 }
 
+const cache = {}
 export const listenTo = ({type, typeId})=>async (dispatch)=>{
-  const es = eventSource('/api/channel/hello')
+  const path = `/api/${type}/${typeId}`
+  const es = cache[path] ? cache[path] : eventSource(path)
   es.onmessage = (e)=>{
     console.log('event: ', e)
     const message = JSON.parse(e.data)
