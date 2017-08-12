@@ -2,12 +2,13 @@ package io.xpk.service;
 
 import io.xpk.web.obj.Message;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,7 +26,7 @@ public class SubscriptionService {
     String key = type + "/" + typeId;
 
     if (!subscriptions.containsKey(key)) {
-      subscriptions.put(key, new ArrayList<>());
+      subscriptions.put(key, Collections.synchronizedList(new ArrayList<>()));
     }
     subscriber.onCompletion(removeFromSubscriptions(subscriber, key));
     subscriber.onTimeout(removeFromSubscriptions(subscriber, key));
@@ -45,9 +46,9 @@ public class SubscriptionService {
 
   private void publishToSubscriber(Message message, SseEmitter subscriber) {
     try {
-      subscriber.send(SseEmitter.event().data(message));
+      subscriber.send(SseEmitter.event().data(message, MediaType.APPLICATION_JSON).reconnectTime(600000).id(String.valueOf(message.getTime())));
     } catch (IOException e) {
-      throw new UncheckedIOException(e);
+      subscriber.completeWithError(e); // Catch Broken Pipes and other cases where it doesn't get removed in time
     }
   }
 }

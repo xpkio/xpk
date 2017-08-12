@@ -16,6 +16,7 @@ export const postMessage = ({type, typeId, body, time}, cb=()=>{})=>async (dispa
 export const listenTo = ({type, typeId})=>async (dispatch)=>{
   const es = eventSource('/api/channel/hello')
   es.onmessage = (e)=>{
+    console.log('event: ', e)
     const message = JSON.parse(e.data)
     dispatch(addMessage(message))
   }

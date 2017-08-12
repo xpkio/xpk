@@ -18,7 +18,6 @@ const MessagePanel = ({messages})=>{
       body: refs.input.value,
       time: Date.now()
     }, ()=>{
-      console.log('POSTED MESSAGE!')
     })
     refs.input.value = ''
   }
