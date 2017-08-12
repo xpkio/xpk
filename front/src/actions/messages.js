@@ -9,6 +9,7 @@ export const addMessage = (...messages)=>({
 export const postMessage = ({type, typeId, body, time}, cb=()=>{})=>async (dispatch)=>{
   const authRes = await withServer().post(`/api/${type}/${typeId}`, {body, time})
   console.log(authRes.data)
+  dispatch(addMessage({body, time, local: true}))
   cb()
 }
 

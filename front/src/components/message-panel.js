@@ -2,13 +2,13 @@ import React from 'react'
 import actions from '../actions'
 import {compose, lifecycle} from 'recompose'
 import {connect} from 'react-redux'
+import moment from 'moment'
+import classNames from 'classnames'
 
 const MessagePanel = ({messages})=>{
   const refs = {
     input: null
   }
-
-  console.log(messages)
 
   const submit = (e)=>{
     e.preventDefault()
@@ -58,7 +58,7 @@ const MessagePanel = ({messages})=>{
               display: 'flex',
               flexDirection: 'column-reverse',
             }}>
-              {Object.keys(messages).map(key=>messages[key]).sort((a, b)=>b.time - a.time).map(({body, time}, index)=>(
+              {Object.keys(messages).map(key=>messages[key]).sort((a, b)=>b.time - a.time).map(({body, time, local}, index)=>(
                 <div className="tile mb-10" key={index}>
                   <div className="tile-icon">
                     <figure className="avatar">
@@ -67,15 +67,12 @@ const MessagePanel = ({messages})=>{
                   </div>
                   <div className="tile-content">
                     <p className="tile-title">
-                      <a href="#username">Ryan Allred</a> &bull; 3 minutes ago
-                      {' '}
-                      <span style={{color: '#d50000'}} className="tooltop tooltip-top" data-tooltip="Tooltip">&bull;</span>
+                      <a href="#username">Ryan Allred</a> &bull; {moment(time).fromNow()}
                     </p>
-                    <p className="tile-subtitle">{body}</p>
+                    <p className={classNames('tile-subtitle', {'text-italic': local})}>{body}</p>
                   </div>
                 </div>
               ))}
-
             </div>
           </div>
         </div>
