@@ -8,12 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Data
@@ -31,6 +29,12 @@ public class XpkUser implements UserDetails {
   private String password;
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String salt;
+
+  @OneToMany(mappedBy = "xpkUser")
+  private List<Registration> registrations;
+
+  @OneToMany(mappedBy = "author")
+  private List<Post> posts;
 
   public String getImgUrl() {
     if (StringUtils.isBlank(email)) {
